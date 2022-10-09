@@ -3,7 +3,7 @@
     <head>
         <link rel="stylesheet" href="../css/styles.css">
         <script src="https://kit.fontawesome.com/27bb130eca.js" crossorigin="anonymous"></script>        
-        <title>RJS2000 - Home</title>
+        <title>RJS2000 - Join</title>
         <link rel="icon" type="image/png" href="../assets/img/dice_icon_white.png">
     </head>
     <body>

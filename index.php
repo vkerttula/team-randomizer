@@ -6,7 +6,7 @@
     <head>
         <link rel="stylesheet" href="css/styles.css">
         <script src="https://kit.fontawesome.com/27bb130eca.js" crossorigin="anonymous"></script>        
-        <title>RJS2000 - Home</title>
+        <title>RJS2000 - Randomizer</title>
         <link rel="icon" type="image/png" href="assets/img/dice_icon_white.png">
     </head>
     <body>
@@ -54,7 +54,7 @@
                         ?>">
                         <br>
                     <!-- Gets team size value with JS and put it to url parameter -->
-                    <button 
+                    <button id="randomize-btn" 
                         onclick="location.href='index.php?randomize=' + document.getElementById('team-size').value;"
                         class="button-30 big-button">
                         Randomize
@@ -93,5 +93,11 @@
         volume.addEventListener("change", function(e) {
             audio.volume = e.currentTarget.value / 100;
         })
+
+        // Disable 'randomize' if no players added
+        let no_players = document.getElementById("no-players");
+        if(no_players){
+            document.getElementById("randomize-btn").disabled = true;
+        }
     </script>
 </html>

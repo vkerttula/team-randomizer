@@ -40,7 +40,7 @@
             }
             // Check if result empty
             if($empty_result) {
-                echo '<tr><td>No players added</td></tr>';
+                echo '<tr><td id="no-players">No players added</td></tr>';
             }
             echo '</table>';
         }

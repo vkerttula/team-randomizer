@@ -177,10 +177,21 @@ footer {
   box-shadow: #D6D6E7 0 3px 7px inset;
   transform: translateY(2px);
 }
+button:disabled,
+button[disabled]{
+    background-color: #fcfcfd65;
+    color: #36395a8d;
+    transform: none!important;
+    box-shadow: none;
+}
+button:disabled,
+button[disabled],
+.button-30:hover {
+    box-shadow: none;
+}
 .big-button {
     font-size: 1.9rem;
 }
-
 /* Mobile */
 @media (max-width: 767px) { 
     body {
