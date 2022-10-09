@@ -1,7 +1,7 @@
 <?php
     class Logic 
     {  
-        public static function GetDB()
+        private static function GetDB()
         {
             // Gets absolute path for DB
             $rootDir = realpath($_SERVER["DOCUMENT_ROOT"]) . "/cloud11/RJS2000";
@@ -24,11 +24,19 @@
             $result = $stmt->execute();
         }
 
+        public static function DeleteAll()
+        {
+            $db = self::GetDB();
+            $stmt = $db->prepare('DELETE FROM players');
+            $result = $stmt->execute();
+        }
+
         public static function GetPlayers()
         {
             $db = self::GetDB();
             $res = $db->query('SELECT * FROM players');
             $empty_result = true;
+            $players_amount = 0;
             echo '<table class="center">';
             while ($row = $res->fetchArray())
             {
@@ -37,15 +45,19 @@
                 <td><a href="php/delete_player.php?id='.$row["id"].'">❌</a></td>
                 </tr>';
                 $empty_result = false;
+                $players_amount++;
             }
             // Check if result empty
             if($empty_result) {
                 echo '<tr><td id="no-players">No players added</td></tr>';
             }
             echo '</table>';
+            if(!$empty_result) {
+                echo '<p id="players-amount"><span id="amount">'.$players_amount.'</span> players - <a href="php/delete_all.php">Delete all</a></p>';
+            }
         }
 
-        public static function GetRandomizedPlayers($team_size)
+        public static function GetRandomizedPlayers($size, $type)
         {
             $db = self::GetDB();
             $res = $db->query('SELECT * FROM players ORDER BY RANDOM()');
@@ -55,8 +67,15 @@
                 array_push($arr, $row["name"]);
             }
 
+            // Depends on whether the user has selected the number of teams or the number of people per team
+            if(strpos($type, 'number-of-teams') !== false) {
+                $count = ceil(sizeof($arr) / $size);
+            } else {
+                $count = $size;
+            }
+
             // Divide the array into the desired groups and convert it to JSON
-            $teams = array_chunk($arr, $team_size);
+            $teams = array_chunk($arr, $count);
             $teams_as_json = json_encode($teams, JSON_PRETTY_PRINT);
 
             // Save randomized team to db as JSON text
@@ -65,16 +84,16 @@
             $result = $stmt->execute();
 
             echo "<div class='result'>";
-            $count = 1;
+            $i = 1;
             foreach($teams as $team)
             {
-                echo "<div id=". $count ."><span class='team-name'>Team " . $count . " </span><br>"; 
+                echo "<div id=". $i ."><span class='team-name'>Team " . $i . " </span><br>"; 
                 foreach($team as $member)
                 {
-                    echo $member . " ";
+                    echo "<span class='player'>".$member.self::randomEmoji()." </span>";
                 }
                 echo "</div>";
-                $count++;
+                $i++;
             }
             echo "</div>";
         }
@@ -107,6 +126,13 @@
 
             // Download file
             header("location: ../assets/teams.csv");
+        }
+
+        private static function randomEmoji() 
+        {
+            $emojis = array("&#128512", "&#128513", "&#128521", "&#128525", "&#128526", "&#128531", "&#128545", "&#128553", "&#128563", "&#129300");
+            shuffle($emojis);
+            return $emojis[0];
         }
     }
 ?>

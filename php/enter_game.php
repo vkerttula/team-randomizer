@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="../css/styles.css">
         <script src="https://kit.fontawesome.com/27bb130eca.js" crossorigin="anonymous"></script>    
         <meta name="viewport" content="width=device-width, initial-scale=1">    
-        <title>RJS2000 - Home</title>
+        <title>RJS2000 - Enter name</title>
         <link rel="icon" type="image/png" href="../assets/img/dice_icon_white.png">
     </head>
     <body>

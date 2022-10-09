@@ -54,15 +54,24 @@ h1 {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
 }
-input[type=text], input[type=number] {
-    padding: 12px 20px;
+input[type=text], input[type=number], select {
+    padding: 5px 20px;
     font-size: 1.3rem;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 8px;
     box-sizing: border-box;
-}  
+}
+#random-type {
+    font-size: 1.3rem;
+    padding: 3px 7px 4px 12px;
+}
+p#players-amount, #players-amount a {
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(212, 212, 212, 0.535);
+}
 a:link { 
     text-decoration: none; 
 }
@@ -99,6 +108,9 @@ i {
 #team-size {
     padding: 4px 18px;
     width: 18%;
+}
+#size {
+    max-width: 112px;
 }
 .controls {
     display: flex;
@@ -177,15 +189,13 @@ footer {
   box-shadow: #D6D6E7 0 3px 7px inset;
   transform: translateY(2px);
 }
-button:disabled,
-button[disabled]{
+input[type="submit"]:disabled{
     background-color: #fcfcfd65;
     color: #36395a8d;
     transform: none!important;
     box-shadow: none;
 }
-button:disabled,
-button[disabled],
+input[type="submit"]:disabled,
 .button-30:hover {
     box-shadow: none;
 }

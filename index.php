@@ -43,29 +43,31 @@
                 </div>
 
                 <div class="button-container">
-                    <label>Team size</label>
-                    <input id="team-size" type=number 
-                        value="<?php
-                            if(isset($_GET["randomize"])){
-                                echo $_GET["randomize"];
-                            } else {
-                                echo 2;
-                            }
-                        ?>">
-                        <br>
-                    <!-- Gets team size value with JS and put it to url parameter -->
-                    <button id="randomize-btn" 
-                        onclick="location.href='index.php?randomize=' + document.getElementById('team-size').value;"
-                        class="button-30 big-button">
-                        Randomize
-                    </button>
+                    <form action="index.php" method="GET">
+                        <select id="random-type" name="randomize-type">
+                            <option value="members-per-team">Members per team</option>
+                            <option <?php if(strpos($_GET["randomize-type"], 'number-of-teams') !== false) {
+                                    echo "selected";
+                                }?> 
+                            value="number-of-teams">Number of teams</option>
+                        </select>
+                        <input id="size" name="randomize" type=number min=1
+                            value="<?php
+                                if(isset($_GET["randomize"])){
+                                    echo $_GET["randomize"];
+                                } else {
+                                    echo 1;
+                                }?>">
+                            <br>
+                        <input id="randomize-btn" class="button-30 big-button" type="submit" value="Randomize">
+                    </form>
                 </div>
 
                 <div id="randomized-bucket">
                     <?php 
-                        // If randomize parameter exist in url, get randomized players 
-                        if(isset($_GET["randomize"])) {
-                            Logic::GetRandomizedPlayers($_GET["randomize"]);
+                        // If randomize parameter exist in url, get randomized players and type
+                        if(isset($_GET["randomize"]) && isset($_GET["randomize-type"])) {
+                            Logic::GetRandomizedPlayers($_GET["randomize"], $_GET["randomize-type"]);
                         }
                     ?>
                     <div class="button-container">
@@ -93,11 +95,18 @@
         volume.addEventListener("change", function(e) {
             audio.volume = e.currentTarget.value / 100;
         })
-
-        // Disable 'randomize' if no players added
+        // Disable 'randomize options' if no players added
         let no_players = document.getElementById("no-players");
         if(no_players){
             document.getElementById("randomize-btn").disabled = true;
+            document.getElementById("random-type").disabled = true;
+            document.getElementById("size").disabled = true;
+        }
+        // Get max number depending of players amount
+        if(document.getElementById("amount")) {
+            let amount = document.getElementById("amount").textContent;
+            document.getElementById("size").max = amount;
         }
     </script>
 </html>
+
